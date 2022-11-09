@@ -16,14 +16,12 @@ contract Store {
     }
 
     function withdraw() public onlyOwner {
-        uint256 amountToWithdraw = balances[msg.sender];
-        balances[msg.sender] = 0;
-        payable(owner).transfer(amountToWithdraw);
+        payable(owner).transfer(payable(this).balance);
     }
 
     event Withdraw(address indexed from, uint256 value);
 
-    function withdrawUserBalance() public onlyOwner {
+    function withdrawUserBalance() public {
         uint256 amountToWithdraw = balances[msg.sender];
         balances[msg.sender] = 0;
         payable(msg.sender).transfer(amountToWithdraw);
